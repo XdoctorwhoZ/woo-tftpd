@@ -26,7 +26,9 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_LIST_DIR})
 
 # Set sources files
 
+
 SET(LIST_SOURCE
+    data.c
     lib/dup2.c
     lib/daemon.c
     lib/xstrdup.c
@@ -49,8 +51,9 @@ ADD_EXECUTABLE(
 
 TARGET_LINK_LIBRARIES(
     woo-tftpd-server
-    -lpthread  -lrt
+        -pthread   -lrt
     )
+# 
 
 # end of file
 

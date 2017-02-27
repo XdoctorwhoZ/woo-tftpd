@@ -31,6 +31,13 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_LIST_DIR})
 ADD_SUBDIRECTORY(woo-tftpd-gui)
 ADD_SUBDIRECTORY(woo-tftpd-server)
 
+# Installation
+
+INSTALL(
+    DIRECTORY   ${CMAKE_CURRENT_LIST_DIR}/package 
+    DESTINATION ${PROJECT_BINARY_DIR}
+    )
+
 # end of file
 
 MESSAGE("[out] ${CMAKE_CURRENT_LIST_FILE}")

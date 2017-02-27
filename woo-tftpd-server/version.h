@@ -1,0 +1,1 @@
+#define VERSION "wootftp based on tftp-hpa 5.2"

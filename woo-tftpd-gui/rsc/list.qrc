@@ -1,0 +1,13 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource>
+
+    <file alias="upload">upload.svg</file>
+    <file alias="download">download.svg</file>
+    <file alias="success">success.svg</file>
+    <file alias="failure">failure.svg</file>
+
+</qresource>
+</RCC>
+
+<!-- icon 24dp with 4dp padding -->

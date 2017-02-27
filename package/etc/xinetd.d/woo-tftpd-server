@@ -1,0 +1,11 @@
+service tftp
+{
+    protocol        = udp
+    socket_type     = dgram
+    wait            = yes
+    user            = root
+    port            = 69
+    server          = /usr/sbin/woo-tftpd-server
+    server_args     = -c -s /tftpboot
+    disable         = no
+}

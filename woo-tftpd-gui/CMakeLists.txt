@@ -20,12 +20,52 @@
 
 MESSAGE("[ in] ${CMAKE_CURRENT_LIST_FILE}")
 
+# Configure Qt package
 
+FIND_PACKAGE(Qt5 REQUIRED Core Widgets Svg Xml)
+SET( CMAKE_AUTOMOC ON )
+ADD_DEFINITIONS(
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Widgets_DEFINITIONS}
+    )
+INCLUDE_DIRECTORIES(
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Widgets_INCLUDE_DIRS}
+    )
+QT5_ADD_RESOURCES(
+    RESOURCE_ADDED ${CMAKE_CURRENT_LIST_DIR}/rsc/list.qrc
+    )
 
+# Configure executable
 
+SET(LIST_SOURCE
+    main.cxx
+    data.cxx
+    widget.cxx
+    application.cxx
+    operation_view.cxx
+    ${RESOURCE_ADDED}
+    )
 
+ADD_EXECUTABLE(
+    woo-tftpd-gui
+    ${LIST_SOURCE}
+    )
 
+SET_PROPERTY(
+    TARGET   woo-tftpd-gui
+    PROPERTY CXX_STANDARD 14
+    )
+
+TARGET_LINK_LIBRARIES(
+    woo-tftpd-gui
+    -lpthread -lrt
+    )
+
+QT5_USE_MODULES(
+    woo-tftpd-gui
+    Core Widgets Svg
+    )
 
 # end of file
-
 MESSAGE("[out] ${CMAKE_CURRENT_LIST_FILE}")

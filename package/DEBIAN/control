@@ -1,0 +1,8 @@
+Package: woo-tftpd
+Version: 0.1.0
+Architecture: i386
+Maintainer: Xavier Rodriguez
+Section: web
+Priority: optional
+Installed-Size: 42
+Description: gui pour tftpd
