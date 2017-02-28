@@ -53,7 +53,18 @@ TARGET_LINK_LIBRARIES(
     woo-tftpd-server
         -pthread   -lrt
     )
-# 
+
+# Install
+
+INSTALL(
+    TARGETS     woo-tftpd-server
+    DESTINATION ${PROJECT_BINARY_DIR}/package/usr/sbin
+    )
+
+INSTALL(
+    TARGETS     woo-tftpd-server
+    DESTINATION /usr/sbin
+    )
 
 # end of file
 

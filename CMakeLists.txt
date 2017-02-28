@@ -18,7 +18,7 @@
 
 # Initialize cmake project
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.0)
 PROJECT(WooTftpd C CXX)
 MESSAGE("[ in] ${CMAKE_CURRENT_LIST_FILE}")
 
@@ -34,8 +34,18 @@ ADD_SUBDIRECTORY(woo-tftpd-server)
 # Installation
 
 INSTALL(
-    DIRECTORY   ${CMAKE_CURRENT_LIST_DIR}/package 
+    DIRECTORY   ${CMAKE_CURRENT_LIST_DIR}/package
     DESTINATION ${PROJECT_BINARY_DIR}
+    )
+
+INSTALL(
+    FILES       ${CMAKE_CURRENT_LIST_DIR}/package/etc/xinetd.d/woo-tftpd-server
+    DESTINATION /etc/xinetd.d
+    )
+
+INSTALL(
+    FILES       ${CMAKE_CURRENT_LIST_DIR}/package/etc/X11/xinit/xinitrc.d/woo-tftpd-gui
+    DESTINATION /etc/X11/xinit/xinitrc.d
     )
 
 # end of file

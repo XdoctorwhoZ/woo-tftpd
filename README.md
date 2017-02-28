@@ -13,19 +13,12 @@ cd build_tftpd
 
 cmake ../woo-tftpd
 
-make
+sudo make install
+
 
 # Install
 
-sudo cp woo-tftpd-server/woo-tftpd-server /usr/sbin/woo-tftpd-server 
-
-sudo cp woo-tftpd-gui/woo-tftpd-gui  /usr/bin/woo-tftpd-gui 
-
-sudo cp package/etc/xinetd.d/woo-tftpd-server /etc/xinetd.d/woo-tftpd-server
-
 delete previous tftp config in xinetd.d or disable it
-
-
 
 ## Work in progress
 
