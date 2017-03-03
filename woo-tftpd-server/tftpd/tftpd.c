@@ -1465,6 +1465,10 @@ static int validate_access(char *filename, int mode,
     tsize_ok = 0;
     *errmsg = NULL;
 
+    // Woo
+    woo_set_filename(&woo_data_obj, filename);
+    // Woo
+
     if (!secure) {
         if (*filename != '/') {
             *errmsg = "Only absolute filenames allowed";
@@ -1561,9 +1565,7 @@ static int validate_access(char *filename, int mode,
     if (file == NULL)
         exit(EX_OSERR);         /* Internal error */
 
-
     // WOO
-    woo_set_filename(&woo_data_obj, filename);
     woo_set_total_block(&woo_data_obj, tsize);
     // WOO
 
@@ -1754,6 +1756,11 @@ static void tftp_recvfile(const struct formats *pf, struct tftphdr *oap, int oac
                 nak(ENOSPACE, NULL);
             goto abort;
         }
+
+        // WOO
+        woo_increment_block(&woo_data_obj, size);
+        // WOO
+
     } while (size == segsize);
     write_behind(file, pf->f_convert);
     (void)fclose(file);         /* close data file */
