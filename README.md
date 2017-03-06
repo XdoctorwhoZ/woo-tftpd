@@ -26,7 +26,6 @@ delete previous tftp config in xinetd.d or disable it
 cmake version 2.8.12.2
 
 
-dpkg -b package/  woo-tftpd_0.1.0_i386.deb
 
 
 

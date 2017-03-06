@@ -39,6 +39,11 @@ INSTALL(
     )
 
 INSTALL(
+    FILES       ${CMAKE_CURRENT_LIST_DIR}/gendeb.sh
+    DESTINATION ${PROJECT_BINARY_DIR}
+    )
+
+INSTALL(
     FILES       ${CMAKE_CURRENT_LIST_DIR}/package/etc/xinetd.d/woo-tftpd-server
     DESTINATION /etc/xinetd.d
     )
