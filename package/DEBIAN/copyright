@@ -1,0 +1,8 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: SOFTware
+Upstream-Contact: John Doe <john.doe@example.com>
+Source: http://www.example.com/software/project
+
+Files: *
+Copyright: 2010 john doe
+License: GPL-3+
