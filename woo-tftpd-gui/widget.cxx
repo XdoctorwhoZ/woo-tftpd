@@ -43,7 +43,9 @@ widget::widget(tftpd::data& dat, QWidget* qparent)
     m_layout->setContentsMargins(0,0,0,0);
     setMinimumWidth(m_data.get_widget_width());
     setMaximumWidth(m_data.get_widget_width());
-    setWindowFlags(Qt::CustomizeWindowHint);
+
+    setAttribute(Qt::WA_ShowWithoutActivating);
+    setWindowFlags(Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint);
 }
 
 /* ============================================================================
