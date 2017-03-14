@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=/usr/bin/woo-tftpd-gui -f
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[fr_FR]=woo-tftpd-gui
+Name=woo-tftpd-gui
+Comment[fr_FR]=Gui pour le woo-tftpd-server
+Comment=Gui for the woo-tftpd-server
