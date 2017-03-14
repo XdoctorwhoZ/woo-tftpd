@@ -48,10 +48,10 @@ INSTALL(
     DESTINATION /etc/xinetd.d
     )
 
-INSTALL(
-    FILES       ${CMAKE_CURRENT_LIST_DIR}/package/etc/X11/xinit/xinitrc.d/woo-tftpd-gui
-    DESTINATION /etc/X11/xinit/xinitrc.d
-    )
+# INSTALL(
+#     FILES       ${CMAKE_CURRENT_LIST_DIR}/package/etc/woo-tftpd/.config/autostart/woo-tftpd-gui.desktop
+#     DESTINATION $HOME/.config/autostart/woo-tftpd-gui.desktop
+#     )
 
 # end of file
 

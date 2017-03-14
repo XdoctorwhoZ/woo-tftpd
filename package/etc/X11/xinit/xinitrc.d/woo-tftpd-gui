@@ -1,4 +1,0 @@
-
-sudo /usr/sbin/woo-tftpd-gui -f
-
-logger woo-tftpd-gui start $?

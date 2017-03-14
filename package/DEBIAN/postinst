@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# For every user in /home/ ...
+for HOME_U in /home/*?; do
+
+# Obtain the username
+USER=$( basename ${HOME_U} )
+
+# In case the user is active (exists in /etc/shadow) ...
+if [ $( grep -c "${USER}:.*:.*:.*:.*:.*:::" /etc/shadow ) == 1 ] \
+&& [ $( grep -c "${USER}:.*:.*:.*:.*:.*:/bin/.*sh" /etc/passwd ) == 1 ] \
+&& [ -d ${HOME_U} ]; then
+
+mkdir -p /home/${USER}/.config/autostart
+cp /etc/woo-tftpd/.config/autostart/woo-tftpd-gui.desktop   /home/${USER}/.config/autostart/woo-tftpd-gui.desktop
+
+fi
+done
