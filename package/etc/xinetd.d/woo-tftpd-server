@@ -6,6 +6,6 @@ service tftp
     user            = root
     port            = 69
     server          = /usr/sbin/woo-tftpd-server
-    server_args     = -c -s /tftpboot
-    disable         = no
+    server_args     = -c -s -v -v /tftpboot
+    disable         = yes
 }

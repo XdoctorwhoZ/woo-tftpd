@@ -43,16 +43,6 @@ INSTALL(
     DESTINATION ${PROJECT_BINARY_DIR}
     )
 
-INSTALL(
-    FILES       ${CMAKE_CURRENT_LIST_DIR}/package/etc/xinetd.d/woo-tftpd-server
-    DESTINATION /etc/xinetd.d
-    )
-
-# INSTALL(
-#     FILES       ${CMAKE_CURRENT_LIST_DIR}/package/etc/woo-tftpd/.config/autostart/woo-tftpd-gui.desktop
-#     DESTINATION $HOME/.config/autostart/woo-tftpd-gui.desktop
-#     )
-
 # end of file
 
 MESSAGE("[out] ${CMAKE_CURRENT_LIST_FILE}")

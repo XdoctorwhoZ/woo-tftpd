@@ -61,11 +61,6 @@ INSTALL(
     DESTINATION ${PROJECT_BINARY_DIR}/package/usr/sbin
     )
 
-INSTALL(
-    TARGETS     woo-tftpd-server
-    DESTINATION /usr/sbin
-    )
-
 # end of file
 
 MESSAGE("[out] ${CMAKE_CURRENT_LIST_FILE}")

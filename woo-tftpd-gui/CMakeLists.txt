@@ -74,11 +74,6 @@ INSTALL(
     DESTINATION ${PROJECT_BINARY_DIR}/package/usr/bin
     )
 
-INSTALL(
-    TARGETS     woo-tftpd-gui
-    DESTINATION /usr/bin
-    )
-
 # end of file
 
 MESSAGE("[out] ${CMAKE_CURRENT_LIST_FILE}")

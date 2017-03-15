@@ -1,9 +1,8 @@
 Package: woo-tftpd
-Version: 1.0
-Architecture: all
-Maintainer: Xavier Rodriguez
-Section: web
+Version: 1.0.1
+Architecture: amd64
+Maintainer: Xavier Rodriguez <xavier.rodriguezalvarez@gmail.com>
+Section: embedded
 Priority: optional
-Installed-Size: 3956
-Description: gui pour tftpd
-Depends: qtbase5-dev, libqt5svg5-dev
+Description: Server and gui for tftp
+Depends: xinetd libqt5svg5
