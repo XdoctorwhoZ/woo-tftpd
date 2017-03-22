@@ -4,5 +4,6 @@ Architecture: amd64
 Maintainer: Xavier Rodriguez <xavier.rodriguezalvarez@gmail.com>
 Section: embedded
 Priority: optional
+Installed-Size: 16664
 Description: Server and gui for tftp
 Depends: xinetd, libqt5svg5
