@@ -5,4 +5,4 @@ Maintainer: Xavier Rodriguez <xavier.rodriguezalvarez@gmail.com>
 Section: embedded
 Priority: optional
 Description: Server and gui for tftp
-Depends: xinetd libqt5svg5
+Depends: xinetd, libqt5svg5
