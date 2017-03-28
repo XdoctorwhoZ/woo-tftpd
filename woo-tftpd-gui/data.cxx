@@ -177,7 +177,7 @@ int data::load_settings()
     // log
     syslog(LOG_DEBUG, "Settings[widget] screen=%d", m_widget_screen);
     syslog(LOG_DEBUG, "Settings[widget] position=point(%d,%d)", m_widget_position.x(), m_widget_position.y());
-    syslog(LOG_DEBUG, "Settings[operation] end_time (%d)", m_end_time_s);
+    syslog(LOG_DEBUG, "Settings[operation] end_time (%d)", m_end_time_s);  // TODO rename in timeout_quit
 
     // signal to app
     emit settings_loaded();

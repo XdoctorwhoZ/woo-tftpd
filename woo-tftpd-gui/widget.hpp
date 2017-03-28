@@ -68,7 +68,8 @@ public slots:
     //!
     void setup();
 
-    //! Update the view element
+    //! Manage item creation and deletion, update created items
+    //! It is called in cycle by a timer in application class
     //!
     void update_view();
 

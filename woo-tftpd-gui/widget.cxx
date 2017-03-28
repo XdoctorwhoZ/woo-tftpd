@@ -44,8 +44,8 @@ widget::widget(tftpd::data& dat, QWidget* qparent)
     setMinimumWidth(m_data.get_widget_width());
     setMaximumWidth(m_data.get_widget_width());
 
-    setAttribute(Qt::WA_ShowWithoutActivating);
     setWindowFlags(Qt::WindowStaysOnTopHint | Qt::CustomizeWindowHint);
+    setAttribute(Qt::WA_ShowWithoutActivating);
 }
 
 /* ============================================================================
@@ -59,7 +59,6 @@ widget::~widget()
  * */
 void widget::setup()
 {
-
     // Compute position
     QPoint position = m_data.get_widget_position();
 
@@ -125,7 +124,7 @@ void widget::adjust_geometry()
 void widget::create_item(int x)
 {
     // log
-    // log::debug() << "[widget] create item " << x;
+    syslog(LOG_DEBUG, "[widget] create item %d", x);
 
     // Create the item
     QSharedPointer<operation_view> new_item(
@@ -151,7 +150,7 @@ void widget::create_item(int x)
 void widget::delete_item(int x)
 {
     // log
-    // log::debug() << "[widget] delete item " << x;
+    syslog(LOG_DEBUG, "[widget] delete item %d", x);
 
     // destroy item
     m_items[x].reset(0);

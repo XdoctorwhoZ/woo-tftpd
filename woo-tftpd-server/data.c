@@ -347,8 +347,15 @@ int woo_end_operation(struct woo_data* this_obj)
     syslog(LOG_DEBUG, "End operation");
     const int opid = this_obj->opid;
     this_obj->smdata->operations[opid].oflags |= WOOTFTPD_END;
-    this_obj->smdata->operations[opid].block = 1;
-    this_obj->smdata->operations[opid].total_block = 1;
+    if( WOOTFTPD_CHECK_FLAG(this_obj->smdata->operations[opid].oflags, WOOTFTPD_UPLOAD) )
+    {
+        this_obj->smdata->operations[opid].block = 1;
+        this_obj->smdata->operations[opid].total_block = 1;    
+    }
+    else
+    {
+        
+    }
 }
 
 /* ============================================================================

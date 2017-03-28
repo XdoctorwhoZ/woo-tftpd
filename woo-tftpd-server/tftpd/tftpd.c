@@ -1765,6 +1765,10 @@ static void tftp_recvfile(const struct formats *pf, struct tftphdr *oap, int oac
     write_behind(file, pf->f_convert);
     (void)fclose(file);         /* close data file */
 
+    // WOO
+    woo_end_operation(&woo_data_obj);
+    // WOO
+
     ap->th_opcode = htons((u_short) ACK);       /* send the "final" ack */
     ap->th_block = htons((u_short) (block));
     (void)send(peer, ackbuf, 4, 0);

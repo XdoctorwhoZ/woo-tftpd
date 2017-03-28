@@ -25,7 +25,6 @@
 #include <QPixmap>
 #include <QtGlobal>
 #include <QProgressBar>
-#include <QSvgRenderer>
 #include <QStyleOption>
 
 // std
@@ -67,21 +66,30 @@ class operation_view : public QWidget
     //!
     QLabel m_icon;
 
-    //! Label to display file transfered
-    //!
-    QLabel m_text;
-
-    //!
+    //! Label to display filename
     //!
     QLabel m_text_filename;
 
-    //!
+    //! Label to display ip of the tftp client
     //!
     QLabel m_text_remote_ip;
 
-    //! Progress bar to display transfert evolution
+    //! Widget that will be loaded with a progress bar or a label
+    //! It will depend on the operation type (upload or download)
     //!
-    QProgressBar m_progessbar;
+    QWidget m_contextual_box;
+
+    //! Layout of the contextual box
+    //!
+    QGridLayout* m_lay_box;
+
+    //! Label to display transfert evolution in download (size unkown)
+    //!
+    QLabel* m_progesslab;
+
+    //! Progress bar to display transfert evolution in upload (size known)
+    //!
+    QProgressBar* m_progessbar;
 
     // ===
 
@@ -113,13 +121,9 @@ protected:
 
 private:
 
-    //! Initialize just one image
-    //!
-    static void initialize_image(int icon_side, const char* rsc_name);
-
     //! Initialize static images used by all widgets
     //!
-    static void initialize_images(int icon_side);
+    static void initialize_images();
 
 };
 

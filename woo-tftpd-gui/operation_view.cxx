@@ -44,50 +44,67 @@ QVector<QPixmap> operation_view::images;
 operation_view::operation_view(const wootftpd_operation& opdata, QWidget* qparent)
     : QWidget(qparent)
     , m_opdata(opdata)
+    , m_progesslab(0)
+    , m_progessbar(0)
 {
-    int icon_side = qMin(wsize.width(), wsize.height()) - 2*spacing;
-    m_icon.setMinimumSize(icon_side,icon_side);
-    m_icon.setMaximumSize(icon_side,icon_side);
-
     // Check static images initialization
     if( operation_view::images.isEmpty() )
     {
-        initialize_images(icon_side);
+        initialize_images();
     }
 
-    // Set fix size
+    // Set fix size for item
     setMinimumHeight(64);
     setMaximumHeight(64);
+
+    // Set fix size for icon
+    int icon_side = 56;
+    m_icon.setMinimumSize(icon_side,icon_side);
+    m_icon.setMaximumSize(icon_side,icon_side);
 
     // Compose layout
     QGridLayout*  lay = new QGridLayout(this);
     lay->addWidget(&m_icon              , 0, 0, 2, 1);
     lay->addWidget(&m_text_remote_ip    , 0, 1, 1, 1);
     lay->addWidget(&m_text_filename     , 0, 2, 1, 1);
-    lay->addWidget(&m_progessbar        , 1, 1, 1, 2);
+    lay->addWidget(&m_contextual_box    , 1, 1, 1, 2);
     lay->setSpacing(spacing);
     lay->setContentsMargins(spacing,spacing,spacing,spacing);
 
+    // Compose layout for the contextual box
+    m_lay_box = new QGridLayout(&m_contextual_box);
+    m_lay_box->setSpacing(0);
+    m_lay_box->setContentsMargins(0,0,0,0);
+
     QString style_0 = QString(
-"QWidget {"  
-        "background-color: #fdf6e3;"
+        "QWidget {"  
+                "background-color: #fdf6e3;"
+                "}"
+        "QProgressBar {"
+           " border: none;"
+           "text-align: center;"
+           "background-color: #93a1a1;"
+            "font-family: \"ubuntu mono\";"
+            "font-size: 16px;"
+            "color: #FFFFFF;"
         "}"
-"QProgressBar {"
-   " border: none;"
-   "text-align: center;"
-   "background-color: #93a1a1;"
-    "font-family: \"ubuntu mono\";"
-    "font-size: 16px;"
-    "color: #FFFFFF;"
-"}"
-"QProgressBar::chunk {"
-"    background-color: #2aa198;"
-"    width: 20px;"
-"}"
+        "QProgressBar::chunk {"
+        "    background-color: #2aa198;"
+        "    width: 20px;"
+        "}"
         )
         ;
-        setStyleSheet(style_0);
+    setStyleSheet(style_0);
 
+    QString style_1 = QString(
+        "QLabel {"  
+        "font-family: \"ubuntu mono\";"
+        "font-size: 16px;"
+        "}"
+        )
+        ;
+    m_text_filename.setStyleSheet(style_1);
+    m_text_remote_ip.setStyleSheet(style_1);
 
     // text alignement        
     m_text_remote_ip.setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
@@ -102,28 +119,50 @@ operation_view::operation_view(const wootftpd_operation& opdata, QWidget* qparen
  * */
 void operation_view::update_view()
 {
-
-    QString style_0 = QString(
-        "QLabel {"  
-        "font-family: \"ubuntu mono\";"
-        "font-size: 16px;"
-        "}"
-        )
-        ;
-
+    // Base information
     QString ip_port = QString(m_opdata.ip) + ":" + QString::number(m_opdata.port);
-
     m_text_remote_ip.setText(ip_port);
     m_text_filename.setText(m_opdata.filename);
 
-
-    m_text_filename.setStyleSheet(style_0);
-    m_text_remote_ip.setStyleSheet(style_0);
-
-    // Set progression
-    m_progessbar.setRange(0, m_opdata.total_block);
-    m_progessbar.setValue(m_opdata.block);
-
+    // Display progression information
+    if( WOOTFTPD_CHECK_FLAG(m_opdata.oflags, WOOTFTPD_UPLOAD) )
+    {
+        if(!m_progessbar)
+        {
+            if(m_progesslab)
+            {
+                delete m_progesslab;
+                m_progesslab = 0;
+            }
+            m_progessbar = new QProgressBar();
+            m_lay_box->addWidget(m_progessbar,0,0,0,0);
+        }
+        m_progessbar->setRange(0, m_opdata.total_block);
+        m_progessbar->setValue(m_opdata.block);
+    }
+    else // WOOTFTPD_DOWNLOAD
+    {
+        if(!m_progesslab)
+        {
+            if(m_progessbar)
+            {
+                delete m_progessbar;
+                m_progessbar = 0;
+            }
+            m_progesslab = new QLabel();
+            m_lay_box->addWidget(m_progesslab,0,0,0,0);
+        }
+        QString style_1 = QString(
+            "QLabel {"  
+            "font-family: \"ubuntu mono\";"
+            "font-size: 16px;"
+            "}"
+            )
+            ;
+        m_progesslab->setStyleSheet(style_1);
+        QString progr = QString::number(m_opdata.block) + QString(" octets");
+        m_progesslab->setText(progr);
+    }
 
     // Display good icon
     if( WOOTFTPD_CHECK_FLAG(m_opdata.oflags, WOOTFTPD_END) )
@@ -164,37 +203,11 @@ void operation_view::paintEvent(QPaintEvent*)
 /* ============================================================================
  *
  * */
-void operation_view::initialize_image(int icon_side, const char* rsc_name)
+void operation_view::initialize_images()
 {
-    // Prepare empty image
-    QImage image(icon_side, icon_side, QImage::Format_ARGB32);
-    image.fill(0x00000000);
-
-    // Prepare painter
-    QPainter painter(&image);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
-
-    // Load file and associate it to svg renderer
-    QFile file(rsc_name);
-    file.open(QIODevice::ReadOnly);
-    QByteArray baData = file.readAll();
-
-    QSvgRenderer renderer;
-    renderer.load(baData);
-    renderer.render(&painter);
-
-    // Append image to vector
-    operation_view::images << QPixmap::fromImage(image);
-}
-
-/* ============================================================================
- *
- * */
-void operation_view::initialize_images(int icon_side)
-{
-    initialize_image(icon_side, ":/upload");    // send file
-    initialize_image(icon_side, ":/download");  // receive file
-    initialize_image(icon_side, ":/success");
-    initialize_image(icon_side, ":/failure");
+    images.resize(image_id::number);
+    operation_view::images[image_id::upload]  .load(":/upload");
+    operation_view::images[image_id::download].load(":/download");
+    operation_view::images[image_id::success] .load(":/success");
+    operation_view::images[image_id::failure] .load(":/failure");
 }
